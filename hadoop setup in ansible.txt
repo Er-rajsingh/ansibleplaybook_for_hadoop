@@ -1,0 +1,43 @@
+to setup hadoop cluster -->
+----------------------------------------- 
+Step 1 - copy jdk and hadoop software to target node
+
+Step 2 - install both the software
+
+To setup namenode in one node -->
+Step 1- Edit hdfs file -
+	<property>
+	<name>dfs.name.dir</name>
+	<value>/foldername</value>
+	</property>
+Step 2 - Edit core-site.xml file -
+	<property>
+	<name>fs.default.name</name>
+	<value>hdfs://IP of master:9001</value>
+	</property>
+Step 3 - make folder of foldername -- mkdir /foldername
+
+Step 4 - Format Namenode -- hadoop namenode -format 
+
+Step 5 - Stop firewalld -- systemctl stop firewalld
+
+Step 6 - hadoop-daemon.sh start namenode
+Step 7 - jps
+
+To setup Datanode in one node -->
+
+Step 1- Edit hdfs file -
+	<property>
+	<name>dfs.data.dir</name>
+	<value>/foldername</value>
+	</property>
+Step 2 - Edit core-site.xml file -
+	<property>
+	<name>fs.default.name</name>
+	<value>hdfs://IP of master:9001</value>
+	</property>
+Step 3 - make folder of foldername -- mkdir /foldername
+
+Step 4 - start the service -- hadoop-daemon.sh start datanode 
+
+Step 5 - jps

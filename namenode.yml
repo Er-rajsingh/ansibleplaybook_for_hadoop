@@ -1,0 +1,51 @@
+---
+ - name: configuring hadoop Cluster-->
+   hosts: namenode 
+   tasks:
+       - name: copying jdk software in the nodes-->
+         copy:
+                 src: "/root/jdk-8u171-linux-x64.rpm"
+                 dest: "/root"
+       - name: copying hadoop software in the nodes-->
+         copy:
+                 src: "/root/hadoop-1.2.1-1.x86_64.rpm"
+                 dest: "/root"
+       - name: intalling jdk software in the nodes-->
+         command:
+                 cmd: "rpm -ivh jdk-8u171-linux-x64.rpm --force"
+       - name: Installing hadoop software in the nodes-->
+         command:
+                 cmd: "rpm -ivh hadoop-1.2.1-1.x86_64.rpm --force"
+       - name: "writing hdfs-site.xml file -->"
+         lineinfile:
+                 path: "/etc/hadoop/hdfs-site.xml"
+                 regexp: '</configuration>'
+                 insertafter: '<configuration>'
+                 line: "<property>\n<name>dfs.name.dir</name>\n<value>/namenode</value>\n</property>\n</configuration>"
+       - name: writing core-site.xml file -->
+         lineinfile:
+                 path: "/etc/hadoop/core-site.xml"
+                 regexp: '</configuration>'
+                 insertafter: '<configuration>'
+                 line: "<property>\n<name>fs.default.name</name>\n<value>hdfs://{{ ansible_facts['default_ipv4']['address'] }}:9001</value>\n</property>\n</configuration>"
+       - name: creating directory -->
+         file:
+                 path: "/namenode"
+                 state: directory
+       - name: formatting namenode -->
+         shell: "echo Y | hadoop namenode -format"
+         register: format
+       - name: Stopping Firewall -->
+         shell: "systemctl stop firewalld"
+         register: firewalld
+       - name: Starting Namenode -->
+         shell: "hadoop-daemon.sh start namenode"
+         register: hadoop
+       - name: checking service status -->
+         shell: "jps"
+         register: jps
+       - debug:
+                 var: jps.stdout_lines
+                 
+
+
