@@ -1,9 +1,9 @@
 [all]
-192.168.1.104  ansible_user=root  ansible_ssh_password=redhat  ansible_connection=ssh
-192.168.1.103  ansible_user=root  ansible_ssh_password=redhat  ansible_connection=ssh
+IP_Address  ansible_user=root  ansible_ssh_password=Your_password  ansible_connection=ssh
+IP_Address  ansible_user=root  ansible_ssh_password=Your_password  ansible_connection=ssh
 
 [namenode]
-192.168.1.104  ansible_user=root  ansible_ssh_password=redhat  ansible_connection=ssh
+IP_Address  ansible_user=root  ansible_ssh_password=Your_password  ansible_connection=ssh
 
 [datanode]
-192.168.1.103  ansible_user=root  ansible_ssh_password=redhat  ansible_connection=ssh
+IP_Address  ansible_user=root  ansible_ssh_password=Your_password  ansible_connection=ssh
